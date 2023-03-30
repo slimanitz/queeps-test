@@ -4,6 +4,9 @@ const jwt = require('jsonwebtoken');
 const User = require('../api/models/user');
 const { jwtSecret } = require('../config/vars');
 
+// I made a specific login in this middleware where I've make a verification
+// if the user is using a good Agency ID and Iam checking as well on the database if it's coherent
+
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
 

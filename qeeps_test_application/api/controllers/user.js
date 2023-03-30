@@ -13,7 +13,7 @@ const getAll = async (req, res) => {
 
 const login = async (req, res) => {
   const token = await userService.login(req.body);
-  return token;
+  res.status(httpStatus.OK).json({ token });
 };
 
 const get = async (req, res) => {

@@ -9,7 +9,7 @@ const assetSchema = new mongoose.Schema(
     buildYear: { type: Number },
     address: { type: String },
     city: { type: String },
-    postalCode: { type: Number },
+    postalCode: { type: String },
     forSell: { type: Boolean },
     price: { type: Number },
     agency: { type: mongoose.Schema.Types.ObjectId, ref: 'agency' },

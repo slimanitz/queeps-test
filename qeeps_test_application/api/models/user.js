@@ -4,7 +4,7 @@ const mongoClient = require('../../config/database');
 
 const userSchema = new mongoose.Schema(
   {
-    email: { type: String },
+    email: { type: String, unique: true },
     password: { type: String },
     name: { type: String },
     agency: { type: mongoose.Schema.Types.ObjectId, ref: 'agency' },

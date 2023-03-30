@@ -1,8 +1,10 @@
 const httpStatus = require('http-status');
 const Joi = require('joi');
 const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const APIError = require('../../utils/api-error');
+const { jwtSecret } = require('../../config/vars');
 
 const schema = Joi.object({
   email: Joi.string().email().required(),
@@ -19,6 +21,14 @@ const create = async (user) => {
   const newUser = new User(value);
   await newUser.save();
   return newUser;
+};
+
+const login = async ({ email, password }) => {
+  const hashpassword = crypto.createHash('sha1').update(password, 'binary').digest('hex');
+  const user = await User.findOne({ email, password: hashpassword });
+  if (!user) throw new APIError('Wrong credentials', httpStatus.UNAUTHORIZED);
+  const token = jwt.sign({ user }, jwtSecret);
+  return token;
 };
 
 const get = async (id) => {
@@ -52,4 +62,5 @@ module.exports.userService = {
   getAll,
   update,
   remove,
+  login,
 };

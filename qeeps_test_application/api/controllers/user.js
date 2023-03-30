@@ -11,6 +11,11 @@ const getAll = async (req, res) => {
   res.status(httpStatus.OK).json(users);
 };
 
+const login = async (req, res) => {
+  const token = await userService.login(req.body);
+  return token;
+};
+
 const get = async (req, res) => {
   const { id } = req.params;
   const user = await userService.get(id);
@@ -35,4 +40,5 @@ module.exports = {
   getAll,
   update,
   remove,
+  login,
 };

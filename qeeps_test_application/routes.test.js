@@ -9,10 +9,11 @@ describe('Agency API', () => {
 
   beforeAll(() => {
     server = app.listen(8080, async () => {
-      await connect();
       console.log('====================================');
       console.log(mongoUrl);
       console.log('====================================');
+      await connect();
+
       console.log('Express server started on port 8080');
     });
   });

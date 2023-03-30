@@ -33,6 +33,6 @@ jobs:
     - name: Test
       run: yarn --cwd ./qeeps_test_application/ test
       env:
-        HOST: ${{ env.HOST }}
+        HOST: ${{ vars.HOST }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         MONGO_URL: ${{ secrets.MONGO_URL }}

@@ -1,11 +1,8 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 const jwt = require('jsonwebtoken');
-const mongoose = require('mongoose');
-const httpStatus = require('http-status');
 const User = require('../api/models/user');
 const { jwtSecret } = require('../config/vars');
-const APIError = require('../utils/api-error');
 
 const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;

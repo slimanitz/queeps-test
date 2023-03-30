@@ -33,6 +33,6 @@ jobs:
         registry-url: 'https://registry.yarnpkg.com'
         cache: 'yarn'
     - name: Install dependencies
-      run: yarn --cwd /qeeps_test_application/ install
+      run: yarn --cwd ./qeeps_test_application/ install
     - name: Test
-      run: yarn --cwd /qeeps_test_application/ test
+      run: yarn --cwd ./qeeps_test_application/ test

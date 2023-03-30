@@ -10,7 +10,7 @@ describe('Agency API', () => {
   beforeAll(() => {
     server = app.listen(8080, async () => {
       console.log('====================================');
-      console.log(mongoUrl);
+      console.log('VAR', mongoUrl);
       console.log('====================================');
       await connect();
 

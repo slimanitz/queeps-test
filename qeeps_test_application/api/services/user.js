@@ -1,6 +1,7 @@
 const httpStatus = require('http-status');
 const Joi = require('joi');
 const crypto = require('crypto');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
 const APIError = require('../../utils/api-error');

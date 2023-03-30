@@ -7,9 +7,7 @@ const user = require('./user');
 
 const router = express.Router();
 router.use('/ping', health);
-router.use('/assets', asset);
 router.use('/agencies', agency);
-router.use('/users', user);
 router.use('/assets', asset);
 router.use('/users', user);
 // __ROUTE__

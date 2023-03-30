@@ -1,10 +1,11 @@
 const httpStatus = require('http-status');
 const Joi = require('joi');
+const crypto = require('crypto');
 const User = require('../models/user');
 const APIError = require('../../utils/api-error');
 
 const schema = Joi.object({
-  email: Joi.string().required(),
+  email: Joi.string().email().required(),
   password: Joi.string().required(),
   name: Joi.string().required(),
   agency: Joi.string().required(),
@@ -14,6 +15,7 @@ const schema = Joi.object({
 const create = async (user) => {
   const { error, value } = schema.validate(user);
   if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
+  value.password = crypto.createHash('sha1').update(value.password, 'binary').digest('hex');
   const newUser = new User(value);
   await newUser.save();
   return newUser;
@@ -33,7 +35,7 @@ const getAll = async () => {
 const update = async (id, payload) => {
   const { error, value } = schema.validate(payload);
   if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
-  const updatedValue = await User.findByIdAndUpdate(id, value);
+  const updatedValue = await User.findByIdAndUpdate(id, value, { returning: true });
   if (!updatedValue) throw new APIError('Not Found', httpStatus.NOT_FOUND);
   return updatedValue;
 };

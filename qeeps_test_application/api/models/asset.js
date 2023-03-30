@@ -12,7 +12,7 @@ const assetSchema = new mongoose.Schema(
     postalCode: { type: Number },
     forSell: { type: Boolean },
     price: { type: Number },
-    agency: { type: mongoose.Types.ObjectId },
+    agency: { type: mongoose.Schema.Types.ObjectId, ref: 'agency' },
 
   },
   { timestamps: true },

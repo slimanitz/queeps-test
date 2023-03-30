@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String },
     password: { type: String },
     name: { type: String },
-    agency: { type: mongoose.Types.ObjectId },
+    agency: { type: mongoose.Schema.Types.ObjectId, ref: 'agency' },
 
   },
   { timestamps: true },

@@ -11,7 +11,7 @@ const agencySchema = new mongoose.Schema(
     website: { type: String },
 
   },
-  { timestamps: true },
+  { versionKey: false },
 );
 
 const Agency = mongoose.model('agency', agencySchema);

@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
     agency: { type: mongoose.Schema.Types.ObjectId, ref: 'agency' },
 
   },
-  { timestamps: true },
+  { versionKey: false },
 );
 
 const User = mongoose.model('user', userSchema);

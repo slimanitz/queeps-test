@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const Joi = require('joi');
+const { ObjectId } = require('mongoose').Types;
 const Agency = require('../models/agency');
 const APIError = require('../../utils/api-error');
 
@@ -13,15 +14,18 @@ const schema = Joi.object({
 
 const create = async (agency) => {
   const { error, value } = schema.validate(agency);
-  if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
+  if (error) throw new APIError({ message: 'Bad Payload', status: httpStatus.BAD_REQUEST });
   const newAgency = new Agency(value);
   await newAgency.save();
   return newAgency;
 };
 
 const get = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    throw new APIError({ message: 'No agency found', status: httpStatus.NOT_FOUND });
+  }
   const agency = await Agency.findById(id);
-  if (!agency) throw new APIError('No agency found', httpStatus.NOT_FOUND);
+  if (!agency) throw new APIError({ message: 'No agency found', status: httpStatus.NOT_FOUND });
   return agency;
 };
 
@@ -32,15 +36,14 @@ const getAll = async () => {
 
 const update = async (id, payload) => {
   const { error } = schema.validate(payload);
-  if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
+  if (error) throw new APIError({ message: 'Bad Payload', status: httpStatus.BAD_REQUEST });
   const updatedValue = await Agency.findByIdAndUpdate(id, payload, { new: true });
-  if (!updatedValue) throw new APIError('Not Found', httpStatus.NOT_FOUND);
+  if (!updatedValue) throw new APIError({ message: 'No agency found', status: httpStatus.NOT_FOUND });
   return updatedValue;
 };
 
 const remove = async (id) => {
-  const agency = await get(id);
-  if (!agency) throw new APIError('No such agency', httpStatus.NOT_FOUND);
+  await get(id);
   await Agency.findByIdAndDelete(id);
 };
 

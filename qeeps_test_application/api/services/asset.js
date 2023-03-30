@@ -16,7 +16,7 @@ const schema = Joi.object({
 
 const create = async (asset, agency) => {
   const { error, value } = schema.validate(asset);
-  if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
+  if (error) throw new APIError({ message: 'Bad Payload', status: httpStatus.BAD_REQUEST });
   value.agency = agency;
   const newAsset = new Asset(value);
   await newAsset.save();
@@ -25,7 +25,7 @@ const create = async (asset, agency) => {
 
 const get = async (id, agency) => {
   const asset = await Asset.findOne({ _id: id, agency });
-  if (!asset) throw new APIError('No asset found', httpStatus.NOT_FOUND);
+  if (!asset) throw new APIError({ message: 'No asset found', status: httpStatus.NOT_FOUND });
   return asset;
 };
 
@@ -36,10 +36,10 @@ const getAll = async (agency) => {
 
 const update = async (id, payload, agency) => {
   const { error, value } = schema.validate(payload);
-  if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
+  if (error) throw new APIError({ message: 'Bad Payload', status: httpStatus.BAD_REQUEST });
   const updatedValue = await Asset
     .findOneAndUpdate({ _id: id, agency }, value, { new: true });
-  if (!updatedValue) throw new APIError('Not Found', httpStatus.NOT_FOUND);
+  if (!updatedValue) throw new APIError({ message: 'Not Found', status: httpStatus.NOT_FOUND });
   return updatedValue;
 };
 

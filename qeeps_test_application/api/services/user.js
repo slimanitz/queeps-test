@@ -17,7 +17,7 @@ const schema = Joi.object({
 
 const create = async (user) => {
   const { error, value } = schema.validate(user);
-  if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
+  if (error) throw new APIError({ message: 'Bad Payload', status: httpStatus.BAD_REQUEST });
   value.password = crypto.createHash('sha1').update(value.password, 'binary').digest('hex');
   const newUser = new User(value);
   await newUser.save();
@@ -27,14 +27,14 @@ const create = async (user) => {
 const login = async ({ email, password }) => {
   const hashpassword = crypto.createHash('sha1').update(password, 'binary').digest('hex');
   const user = await User.findOne({ email, password: hashpassword });
-  if (!user) throw new APIError('Wrong credentials', httpStatus.UNAUTHORIZED);
+  if (!user) throw new APIError({ message: 'Wrong credentials', status: httpStatus.UNAUTHORIZED });
   const token = jwt.sign({ user }, jwtSecret);
   return token;
 };
 
 const get = async (id) => {
   const user = await User.findById(id);
-  if (!user) throw new APIError('No user found', httpStatus.NOT_FOUND);
+  if (!user) throw new APIError({ message: 'No user found', status: httpStatus.NOT_FOUND });
   return user;
 };
 
@@ -45,9 +45,9 @@ const getAll = async () => {
 
 const update = async (id, payload) => {
   const { error, value } = schema.validate(payload);
-  if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
+  if (error) throw new APIError({ message: 'Bad Payload', status: httpStatus.BAD_REQUEST });
   const updatedValue = await User.findByIdAndUpdate(id, value, { new: true });
-  if (!updatedValue) throw new APIError('Not Found', httpStatus.NOT_FOUND);
+  if (!updatedValue) throw new APIError({ message: 'Not Found', status: httpStatus.NOT_FOUND });
   return updatedValue;
 };
 

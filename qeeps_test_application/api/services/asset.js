@@ -37,7 +37,8 @@ const getAll = async (agency) => {
 const update = async (id, payload, agency) => {
   const { error, value } = schema.validate(payload);
   if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
-  const updatedValue = await Asset.findOneAndUpdate({ _id: id, agency }, value);
+  const updatedValue = await Asset
+    .findOneAndUpdate({ _id: id, agency }, value, { new: true });
   if (!updatedValue) throw new APIError('Not Found', httpStatus.NOT_FOUND);
   return updatedValue;
 };

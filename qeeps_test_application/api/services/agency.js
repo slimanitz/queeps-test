@@ -31,9 +31,9 @@ const getAll = async () => {
 };
 
 const update = async (id, payload) => {
-  const { error, value } = schema.validate(payload);
+  const { error } = schema.validate(payload);
   if (error) throw new APIError('Bad Payload', httpStatus.BAD_REQUEST);
-  const updatedValue = await Agency.findByIdAndUpdate(id, value);
+  const updatedValue = await Agency.findByIdAndUpdate(id, payload, { new: true });
   if (!updatedValue) throw new APIError('Not Found', httpStatus.NOT_FOUND);
   return updatedValue;
 };

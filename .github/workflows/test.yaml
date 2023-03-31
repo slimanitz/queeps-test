@@ -34,12 +34,18 @@ jobs:
         HOST: ${{ vars.HOST }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         MONGO_URL: ${{ secrets.MONGO_URL }}
+
+
+    post-run:
+    needs: test
+    if: always()
+    
         
-  # Use a status check to mark the workflow as successful or unsuccessful
-  # based on the status of the my-job job
-  outputs:
-    my-job-status: ${{ job.status }}
-  if: ${{ needs.my-job.result == 'success' }}
-  success:
-  if: ${{ needs.my-job.result == 'failure' }}
-  failure:
+    # Use a status check to mark the workflow as successful or unsuccessful
+    # based on the status of the my-job job
+    outputs:
+      my-job-status: ${{ job.status }}
+    if: ${{ needs.my-job.result == 'success' }}
+    success:
+    if: ${{ needs.my-job.result == 'failure' }}
+    failure:

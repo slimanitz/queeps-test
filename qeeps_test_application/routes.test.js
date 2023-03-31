@@ -13,8 +13,8 @@ describe('Agency API', () => {
     });
   });
 
-  afterAll((done) => {
-    server.close(done);
+  afterAll(() => {
+    server.close();
   });
   let agency = {
     name: 'orpi',

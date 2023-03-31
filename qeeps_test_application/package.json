@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon app.js",
     "crud:create": "node ./scripts/crud-creation.js",
-    "test": "jest --setupFiles dotenv/config --detectOpenHandles"
+    "test": "jest --setupFiles dotenv/config --detectOpenHandles --forceExit"
   },
   "dependencies": {
     "cors": "^2.8.5",

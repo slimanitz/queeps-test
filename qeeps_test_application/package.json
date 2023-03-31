@@ -4,9 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon app.js",
+    "dev": "APP_ENV=local nodemon app.js",
     "crud:create": "node ./scripts/crud-creation.js",
-    "test": "jest --setupFiles dotenv/config --detectOpenHandles --forceExit"
+    "test": "APP_ENV=test jest --setupFiles dotenv/config --detectOpenHandles --forceExit --collectCoverage"
   },
   "dependencies": {
     "cors": "^2.8.5",

@@ -2,18 +2,13 @@
 const request = require('supertest');
 const app = require('./config/server');
 const connect = require('./config/database');
-const { mongoUrl } = require('./config/vars');
 
 describe('Agency API', () => {
   let server;
 
   beforeAll(() => {
     server = app.listen(8080, async () => {
-      console.log('====================================');
-      console.log('VAR', mongoUrl);
-      console.log('====================================');
       await connect();
-
       console.log('Express server started on port 8080');
     });
   });

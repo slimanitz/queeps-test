@@ -34,6 +34,7 @@ jobs:
         HOST: ${{ vars.HOST }}
         JWT_SECRET: ${{ secrets.JWT_SECRET }}
         MONGO_URL: ${{ secrets.MONGO_URL }}
+        
   # Use a status check to mark the workflow as successful or unsuccessful
   # based on the status of the my-job job
   outputs:

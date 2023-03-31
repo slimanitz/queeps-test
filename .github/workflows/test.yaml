@@ -44,11 +44,11 @@ jobs:
       - name: Output message
         run: echo "Testing completed!"
 
-  # Use a status check to mark the workflow as successful or unsuccessful
-  # based on the status of the my-job job
-  outputs:
-    my-job-status: ${{ job.status }}
-  if: ${{ needs.my-job.result == 'success' }}
-  success:
-  if: ${{ needs.my-job.result == 'failure' }}
-  failure:
+    # Use a status check to mark the workflow as successful or unsuccessful
+    # based on the status of the my-job job
+    outputs:
+      my-job-status: ${{ job.status }}
+    if: ${{ needs.my-job.result == 'success' }}
+    success:
+    if: ${{ needs.my-job.result == 'failure' }}
+    failure:

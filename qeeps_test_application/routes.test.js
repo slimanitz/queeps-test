@@ -162,6 +162,18 @@ describe('Testing API Endpoints API', () => {
     });
   });
 
+  describe('POST /api/users/login', () => {
+    it('should return a jwt', async () => {
+      const res = await request(app).post('/api/users/login').send({ email: user.email, password: user.password });
+      expect(res.status).toEqual(200);
+    });
+
+    it('Should return code 401 on wrong credentials', async () => {
+      const res = await request(app).post('/api/users/login').send({ email: user.email, password: 'notpassword' });
+      expect(res.status).toEqual(401);
+    });
+  });
+
   describe('PATCH /api/users/:id', () => {
     it('should update an existing user', async () => {
       const updatedUser = {

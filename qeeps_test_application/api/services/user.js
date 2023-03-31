@@ -3,6 +3,7 @@ const Joi = require('joi');
 const crypto = require('crypto');
 // eslint-disable-next-line import/no-extraneous-dependencies
 const jwt = require('jsonwebtoken');
+const { ObjectId } = require('mongoose').Types;
 const User = require('../models/user');
 const APIError = require('../../utils/api-error');
 const { jwtSecret } = require('../../config/vars');
@@ -33,6 +34,9 @@ const login = async ({ email, password }) => {
 };
 
 const get = async (id) => {
+  if (!ObjectId.isValid(id)) {
+    throw new APIError({ message: 'No user found', status: httpStatus.NOT_FOUND });
+  }
   const user = await User.findById(id);
   if (!user) throw new APIError({ message: 'No user found', status: httpStatus.NOT_FOUND });
   return user;
@@ -46,14 +50,14 @@ const getAll = async () => {
 const update = async (id, payload) => {
   const { error, value } = schema.validate(payload);
   if (error) throw new APIError({ message: 'Bad Payload', status: httpStatus.BAD_REQUEST });
+  value.password = crypto.createHash('sha1').update(value.password, 'binary').digest('hex');
   const updatedValue = await User.findByIdAndUpdate(id, value, { new: true });
   if (!updatedValue) throw new APIError({ message: 'Not Found', status: httpStatus.NOT_FOUND });
   return updatedValue;
 };
 
 const remove = async (id) => {
-  const user = await get(id);
-  if (!user) throw new APIError('No such user', httpStatus.NOT_FOUND);
+  await get(id);
   await User.findByIdAndDelete(id);
 };
 

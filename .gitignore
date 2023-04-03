@@ -1,0 +1,6 @@
+/qeeps_test_application/node_modules
+/qeeps_test_application/.env*
+/qeeps_test_application/scripts
+/qeeps_test_application/templates
+/qeeps_test_application/coverage
+

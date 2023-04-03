@@ -24,6 +24,7 @@ jobs:
         node-version: '16.10.0'
         registry-url: 'https://registry.yarnpkg.com'
         cache: 'yarn'
+        cache-dependency-path: ./qeeps_test_application/yarn.lock
     - name: Install dependencies
       run: yarn --cwd ./qeeps_test_application/ install
     - name: Test
